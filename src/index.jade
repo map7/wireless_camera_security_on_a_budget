@@ -1,0 +1,152 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+    title Wireless security system on a budget
+
+    // build:css styles/styles.css
+    //- Check out 'src/bower_components/prism/themes/' for available themes
+    link(rel='stylesheet', type='text/css', href='bower_components/prism/themes/prism-tomorrow.css')
+    link(rel='stylesheet', type='text/css', href='styles/main.css')
+    // endbuild
+
+  body
+
+    article
+
+      section
+        h1 Wireless camera system on a budget
+        p Michael Pope (@map7)
+        p MLUG Feb, 2014
+
+      section
+        h2 Disclaimer
+        ul
+          li Wireless cameras are not fool proof
+          li Batteries in old phones are unreliable
+        
+      section
+        h2 Re-use
+        ul
+          li Old/Smashed phones
+          li Network/computers already there
+          li Use USB cameras 'mjpg_streamer'
+        
+      section
+        h2 Hardware used
+        ul
+          li OLD android mobile phones
+          li Phone to camera mount
+          li Ceiling brakets
+          li WIFI Router
+          li Linux box (recording)
+
+      section
+        h2 Phone mount
+        img.tripod(src='images/tripod.png')
+        p $7 from ebay
+
+      section
+        h2 Bracket
+        img.tripod(src='images/bracket.png')
+        p $2.30 from ebay
+
+      section
+        h2 Android phone server
+        ul
+          li IP Webcam
+          li Android 1.6+
+          li Load through 'adb install IP\ Webcam.apk'
+
+      section
+        h2 Android phone viewing
+        ul
+          li IP Cam Viewer (Basic/Lite/Pro)
+          li Basic/Lite are Free
+          li View heaps of cameras at once
+          
+      section
+        h2 Recording software 'Motion'
+        ul
+          li Fast
+          li Low resources
+          li no dependencies
+          li flexible
+          li Uses mpeg/jpg output
+
+      section
+        h2 Recording setup
+        ul
+          li Settings in /etc/motion/motion.conf
+          li Balance file size vs performance
+          li Make sure it starts on boot
+
+      section
+        h2 Enable on boot
+        /etc/default/motion
+        pre
+          code.language-javascript.
+            start_motion_daemon=yes
+          
+      section
+        h2 Example motion.conf
+        pre
+          code.language-javascript.
+            # ffv1 codec works best
+            ffmpeg_video_codec ffv1
+
+            netcam_url http://10.0.0.100:8080/videofeed
+            
+            target_dir /media/data/recordings
+
+            width 640
+            height 480
+            framerate 15
+            
+            # View video feed from any computer
+            control_localhost off
+
+      section
+        h2 Remove old recordings
+        pre
+          code.language-javascript.
+            # Remove over 60 days, put into /etc/crontab
+            /usr/bin/find /recordings -mtime +60 -exec rm {} \;
+
+      section.multi
+        h2 Multi-camera setup
+        ul
+          li Use a separate config per camera (thread1.conf)
+          li Just enter the differences
+
+      section
+        h2 Multi-camera example
+        pre
+          code.language-javascript.
+            netcam_url http://10.0.0.101:8080/videofeed
+            target_dir /media/data/recordings/kitchen
+            webcam_port 8081
+      
+      section
+        h2 Recording requirements
+        ul
+          li Spare computer running Linux
+          li About 1GB per day per camera
+
+      section
+        h2 Questions
+
+    // build:js scripts/scripts.js
+    script(src='bower_components/bespoke.js/dist/bespoke.min.js')
+    script(src='bower_components/bespoke-keys/dist/bespoke-keys.min.js')
+    script(src='bower_components/bespoke-touch/dist/bespoke-touch.min.js')
+    script(src='bower_components/bespoke-bullets/dist/bespoke-bullets.min.js')
+    script(src='bower_components/bespoke-scale/dist/bespoke-scale.min.js')
+    script(src='bower_components/bespoke-hash/dist/bespoke-hash.min.js')
+    script(src='bower_components/bespoke-progress/dist/bespoke-progress.min.js')
+    script(src='bower_components/bespoke-state/dist/bespoke-state.min.js')
+    script(src='bower_components/bespoke-forms/dist/bespoke-forms.min.js')
+    script(src='bower_components/prism/prism.js')
+    script(src='scripts/main.js')
+    // endbuild
