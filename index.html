@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Wireless security system on a budget</title>
+    <link rel="stylesheet" href="styles/styles.css"/>
+  </head>
+  <body>
+    <article>
+      <section>
+        <h1>Wireless camera system on a budget</h1>
+        <p>Michael Pope (@map7)</p>
+        <p>MLUG Feb, 2014</p>
+      </section>
+      <section>
+        <h2>Disclaimer</h2>
+        <ul>
+          <li>Wireless cameras are not fool proof</li>
+          <li>Batteries in old phones are unreliable</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Re-use</h2>
+        <ul>
+          <li>Old/Smashed phones</li>
+          <li>Network/computers already there</li>
+          <li>Use USB cameras 'mjpg_streamer'</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Hardware used</h2>
+        <ul>
+          <li>OLD android mobile phones</li>
+          <li>Phone to camera mount</li>
+          <li>Ceiling brakets</li>
+          <li>WIFI Router</li>
+          <li>Linux box (recording)</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Phone mount</h2><img src="images/tripod.png" class="tripod">
+        <p>$7 from ebay</p>
+      </section>
+      <section>
+        <h2>Bracket</h2><img src="images/bracket.png" class="tripod">
+        <p>$2.30 from ebay</p>
+      </section>
+      <section>
+        <h2>Android phone server</h2>
+        <ul>
+          <li>IP Webcam</li>
+          <li>Android 1.6+</li>
+          <li>Load through 'adb install IP\ Webcam.apk'</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Android phone viewing</h2>
+        <ul>
+          <li>IP Cam Viewer (Basic/Lite/Pro)</li>
+          <li>Basic/Lite are Free</li>
+          <li>View heaps of cameras at once</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Recording software 'Motion'</h2>
+        <ul>
+          <li>Fast</li>
+          <li>Low resources</li>
+          <li>no dependencies</li>
+          <li>flexible</li>
+          <li>Uses mpeg/jpg output</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Recording setup</h2>
+        <ul>
+          <li>Settings in /etc/motion/motion.conf</li>
+          <li>Balance file size vs performance</li>
+          <li>Make sure it starts on boot</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Enable on boot</h2>/etc/default/motion
+        <pre><code class="language-javascript">start_motion_daemon=yes
+</code></pre>
+      </section>
+      <section>
+        <h2>Example motion.conf</h2>
+        <pre><code class="language-javascript"># ffv1 codec works best
+ffmpeg_video_codec ffv1
+
+netcam_url http://10.0.0.100:8080/videofeed
+
+target_dir /media/data/recordings
+
+width 640
+height 480
+framerate 15
+
+# View video feed from any computer
+control_localhost off
+</code></pre>
+      </section>
+      <section>
+        <h2>Remove old recordings</h2>
+        <pre><code class="language-javascript"># Remove over 60 days, put into /etc/crontab
+/usr/bin/find /recordings -mtime +60 -exec rm {} \;
+</code></pre>
+      </section>
+      <section class="multi">
+        <h2>Multi-camera setup</h2>
+        <ul>
+          <li>Use a separate config per camera (thread1.conf)</li>
+          <li>Just enter the differences</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Multi-camera example</h2>
+        <pre><code class="language-javascript">netcam_url http://10.0.0.101:8080/videofeed
+target_dir /media/data/recordings/kitchen
+webcam_port 8081
+</code></pre>
+      </section>
+      <section>
+        <h2>Recording requirements</h2>
+        <ul>
+          <li>Spare computer running Linux</li>
+          <li>About 1GB per day per camera</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Questions</h2>
+      </section>
+    </article>
+    <script src="scripts/scripts.js"></script>
+  </body>
+</html>
